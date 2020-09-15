@@ -1,46 +1,25 @@
+<script>
+	import AuthForm from '../components/AuthForm.svelte';
+</script>
+
 <style>
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
+	#auth-screen {
+		display: flex;
+		flex-direction: column;
 
-	h1 {
-		font-size: 2.8em;
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
+		justify-content: center;
+		align-items: center;
 
-	figure {
-		margin: 0 0 1em 0;
-	}
-
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
+		width: 100vw;
+		height: 100vh;
 	}
 </style>
 
 <svelte:head>
-	<title>Sapper project template</title>
+	<title>authenticate</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<article id="auth-screen">
+	<AuthForm />
+</article>
 
-<figure>
-	<img alt='Success Kid' src='successkid.jpg'>
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
