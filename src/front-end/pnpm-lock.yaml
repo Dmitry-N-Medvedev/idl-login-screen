@@ -1,4 +1,5 @@
 dependencies:
+  '@fortawesome/free-solid-svg-icons': 5.14.0
   compression: 1.7.4
   polka: 1.0.0-next.11
   sirv: 1.0.6
@@ -12,9 +13,11 @@ devDependencies:
   '@rollup/plugin-commonjs': 14.0.0_rollup@2.26.11
   '@rollup/plugin-node-resolve': 8.4.0_rollup@2.26.11
   '@rollup/plugin-replace': 2.3.3_rollup@2.26.11
+  fa-svelte: 3.1.0
   npm-run-all: 4.1.5
   rollup: 2.26.11
   rollup-plugin-svelte: 6.0.1_rollup@2.26.11+svelte@3.25.0
+  rollup-plugin-svelte-svg: 0.2.3_svelte@3.25.0
   rollup-plugin-terser: 7.0.2_rollup@2.26.11
   sapper: 0.28.6_svelte@3.25.0
   svelte: 3.25.0
@@ -958,6 +961,20 @@ packages:
     dev: true
     resolution:
       integrity: sha512-bvM7Qz6eKnJVFIn+1LPtjlBFPVN5jNDc1XmN15vWe7Q3DPBufWWsLiIvUu7xW87uTG6QoggpIDnUgLQvPheU+Q==
+  /@fortawesome/fontawesome-common-types/0.2.30:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-TsRwpTuKwFNiPhk1UfKgw7zNPeV5RhNp2Uw3pws+9gDAkPGKrtjR1y2lI3SYn7+YzyfuNknflpBA1LRKjt7hMg==
+  /@fortawesome/free-solid-svg-icons/5.14.0:
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.30
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-M933RDM8cecaKMWDSk3FRYdnzWGW7kBBlGNGfvqLVwcwhUPNj9gcw+xZMrqBdRqxnSXdl3zWzTCNNGEtFUq67Q==
   /@polka/url/1.0.0-next.11:
     dev: false
     resolution:
@@ -1314,6 +1331,10 @@ packages:
       node: '>=0.8.0'
     resolution:
       integrity: sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+  /estree-walker/0.2.1:
+    dev: true
+    resolution:
+      integrity: sha1-va/oCVOD2EFNXcLs9MkXO225QS4=
   /estree-walker/0.6.1:
     dev: true
     resolution:
@@ -1328,6 +1349,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
+  /fa-svelte/3.1.0:
+    dev: true
+    resolution:
+      integrity: sha512-RqBOWwt7sc+ta9GFjbu5GOwKFRzn3rMPPSqvSGpIwsfVnpMjiI5ttv84lwNsCMEYI6/lu/iH21HUcE3TLz8RGQ==
   /fs.realpath/1.0.0:
     dev: true
     resolution:
@@ -1861,6 +1886,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-ic+7JYiV8Vi2yzQGFWOkiZD5Z9z7O2Zhm9XMaTxdJExKasieFCr+yXZ/WmXsckHiKl12ar0y6XiXDx3m4RHn1w==
+  /rollup-plugin-svelte-svg/0.2.3_svelte@3.25.0:
+    dependencies:
+      rollup-pluginutils: 1.5.2
+      svelte: 3.25.0
+    dev: true
+    peerDependencies:
+      svelte: ^3.16.7
+    resolution:
+      integrity: sha512-WH2KqihgVbcJT/PrjiJ/ipctrGueRdOLaaEuAIbXYqfsEzNb9krOVLyc5TL7to3cEKL6DiAa8IEe7IL1oqVolg==
   /rollup-plugin-svelte/6.0.1_rollup@2.26.11+svelte@3.25.0:
     dependencies:
       require-relative: 0.8.7
@@ -1886,6 +1920,13 @@ packages:
       rollup: ^2.0.0
     resolution:
       integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==
+  /rollup-pluginutils/1.5.2:
+    dependencies:
+      estree-walker: 0.2.1
+      minimatch: 3.0.4
+    dev: true
+    resolution:
+      integrity: sha1-HhVud4+UtyVb+hs9AXi+j1xVJAg=
   /rollup-pluginutils/2.8.2:
     dependencies:
       estree-walker: 0.6.1
@@ -2170,15 +2211,18 @@ specifiers:
   '@babel/plugin-transform-runtime': ^7.0.0
   '@babel/preset-env': ^7.0.0
   '@babel/runtime': ^7.0.0
+  '@fortawesome/free-solid-svg-icons': ^5.14.0
   '@rollup/plugin-babel': ^5.0.0
   '@rollup/plugin-commonjs': ^14.0.0
   '@rollup/plugin-node-resolve': ^8.0.0
   '@rollup/plugin-replace': ^2.2.0
   compression: ^1.7.1
+  fa-svelte: ^3.1.0
   npm-run-all: ^4.1.5
   polka: next
   rollup: ^2.3.4
   rollup-plugin-svelte: ^6.0.0
+  rollup-plugin-svelte-svg: ^0.2.3
   rollup-plugin-terser: ^7.0.0
   sapper: ^0.28.0
   sirv: ^1.0.0
