@@ -7,6 +7,8 @@ import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 
+import svelteSVG from "rollup-plugin-svelte-svg";
+
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
@@ -21,6 +23,9 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
+			svelteSVG({
+				dev
+			}),
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
@@ -66,6 +71,10 @@ export default {
 		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
+			svelteSVG({
+				generate: "ssr",
+				dev
+			}),
 			replace({
 				'process.browser': false,
 				'process.env.NODE_ENV': JSON.stringify(mode)
