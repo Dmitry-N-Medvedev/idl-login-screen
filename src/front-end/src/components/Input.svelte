@@ -1,5 +1,5 @@
 <script>
-  import Icon from 'fa-svelte/index.js';
+  import Icon from 'fa-svelte';
 
   import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt.js';
 
