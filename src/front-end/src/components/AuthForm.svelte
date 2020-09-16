@@ -31,6 +31,8 @@
     background-color: var(--auth-form-background-color);
     width: 50vh;
     height: 50vh;
+
+    color: white;
   }
 
   #tabs {
@@ -100,33 +102,38 @@
     justify-content: center;
     align-items: center;
 
-    color: white;
-
     text-transform: uppercase;
   }
 
   #auth-panel {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(7, 1fr);
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+    grid-template-rows: repeat(8, 1fr);
     grid-template-areas:
-      'position-selector-title position-control'
-      'date-of-birth legal-guardian-email'
-      'first-name last-name'
-      'user-name email'
-      'password repeat-password'
-      'city localization'
-      'terms marketing'
+      '. position-selector-title position-control .'
+      '. date-of-birth legal-guardian-email .'
+      '. first-name last-name .'
+      '. user-name email .'
+      '. password repeat-password .'
+      '. city localization .'
+      '. terms terms .'
+      '. marketing marketing .'
     ;
     grid-gap: 0.5vw;
   }
 
   #position-selector-title {
-    color: white;
+    grid-area: position-selector-title;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
   }
 
   #position-control {
-    color: white;
+    grid-area: position-control;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #date-of-birth {
@@ -207,46 +214,44 @@
   <div id="auth-panel">
     <div id="position-selector-title">what is your position?</div>
     <div id="position-control">
-      <input type="radio" id="position-coach" name="position" value="coach" checked />
-      <label for="position-coach">coach</label>
-      <input type="radio" id="position-player" name="position" value="player" />
-      <label for="position-player">player</label>
+      <Input type="radio" id="position-coach" name="position" value="coach" label="coach" checked />
+      <Input type="radio" id="position-player" name="position" value="player" label="player" />
     </div>
     <div id="date-of-birth">
-      <Input type="date" name="date-of-birth" hint="date of birth" />
+      <Input type="date" name="date-of-birth" placeholder="date of birth" />
     </div>
     <div id="legal-guardian-email">
-      <Input type="email" name="legal-guardian-email" hint="legal guardian e-mail" />
+      <Input type="email" name="legal-guardian-email" placeholder="legal guardian e-mail" />
     </div>
     <div id="first-name">
-      <Input type="text" name="first-name" hint="first name" />
+      <Input type="text" name="first-name" placeholder="first name" />
     </div>
     <div id="last-name">
-      <Input type="text" name="last-name" hint="last name" />
+      <Input type="text" name="last-name" placeholder="last name" />
     </div>
     <div id="user-name">
-      <Input type="text" name="user-name" hint="user name" />
+      <Input type="text" name="user-name" placeholder="user name" />
     </div>
     <div id="email">
-      <Input type="email" name="email" hint="e-mail" />
+      <Input type="email" name="email" placeholder="e-mail" />
     </div>
     <div id="password">
-      <Input type="password" name="password" hint="password" />
+      <Input type="password" name="password" placeholder="password" />
     </div>
     <div id="repeat-password">
-      <Input type="password" name="repeat-password" hint="repeat password" />
+      <Input type="password" name="repeat-password" placeholder="repeat password" />
     </div>
     <div id="city">
-      <Input type="text" name="city" hint="city" />
+      <Input type="text" name="city" placeholder="city" />
     </div>
     <div id="localization">
       <Input type="select" name="localization" />
     </div>
     <div id="terms">
-      <Input type="checkbox" name="terms" hint="I read and agree to <a href='https://google.com'>Terms & Conditions</a>" />
+      <Input type="checkbox" name="terms" placeholder="I read and agree to <a href='https://google.com' target='_blank'>Terms & Conditions</a>" />
     </div>
     <div id="marketing">
-      <Input type="checkbox" name="marketing" hint="I'd like to get marketing promotions, special offers from KickID" checked />
+      <Input type="checkbox" name="marketing" placeholder="I'd like to get marketing promotions, special offers from KickID" checked />
     </div>
   </div>
 </form>

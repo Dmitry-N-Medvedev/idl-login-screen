@@ -1,7 +1,21 @@
-<script>
-import AuthForm from "../AuthForm.svelte";
-import CircularImageButton from "../CircularImageButton.svelte";
+<style>
+  .checkboxContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .checkboxInput {
+    position: relative;
+    display: flex;
+    flex: 1 0 auto;
+  }
 
-</script>
-<input type="checkbox" {...$$props} {...$$restProps} />
-<label for={$$restProps['id']}>some checkbox</label>
+  .checkboxLabel {
+    flex: 9 0 auto;
+  }
+</style>
+
+<div class="checkboxContainer">
+  <input type="checkbox" {...$$props} {...$$restProps} class="checkboxInput" />
+  <label for={$$restProps['id']} class="checkboxLabel">{@html $$restProps['placeholder']}</label>
+</div>

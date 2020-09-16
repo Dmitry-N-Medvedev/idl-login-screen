@@ -1,6 +1,23 @@
 <script>
-import { text } from "svelte/internal";
-import AuthForm from "../AuthForm.svelte";
-
+  import ControlContainer from '../ControlContainer.svelte';
 </script>
-<input type="text" {...$$props} {...$$restProps} />
+<style>
+  .textInput {
+    position: relative;
+    display: flex;
+    flex: 1 0 auto;
+    border: none;
+  }
+
+  .textInput::placeholder {
+    text-transform: capitalize;
+  }
+
+  .textInput:focus {
+    outline: none;
+  }
+</style>
+
+<ControlContainer>
+  <input class="textInput" type="text" {...$$props} {...$$restProps} />
+</ControlContainer>
