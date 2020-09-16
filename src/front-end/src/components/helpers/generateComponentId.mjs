@@ -1,3 +1,3 @@
 import { nanoid } from 'nanoid';
 
-export const generateComponentId = (keyLength = 5) => `C_${nanoid(keyLength)}`;
+export const generateComponentId = (keyLength = 5) => `i${nanoid(keyLength)}`;
