@@ -1,7 +1,7 @@
 <script>
-  import Icon from 'fa-svelte';
+  import Icon from 'fa-svelte/index.js';
 
-  import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt';
+  import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt.js';
 
   export let hint = '';
   export let type = 'text';

@@ -1,5 +1,5 @@
 import * as sapper from '@sapper/app';
 
 sapper.start({
-	target: document.querySelector('#idl')
+  target: document.querySelector('#idl'),
 });
