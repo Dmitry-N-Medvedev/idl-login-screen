@@ -218,34 +218,34 @@
       <Input type="radio" id="position-player" name="position" value="player" label="player" />
     </div>
     <div id="date-of-birth">
-      <Input type="date" name="date-of-birth" placeholder="date of birth" />
+      <Input type="date" name="date-of-birth" placeholder="date of birth" autocomplete="bday" />
     </div>
     <div id="legal-guardian-email">
       <Input type="email" name="legal-guardian-email" placeholder="legal guardian e-mail" />
     </div>
     <div id="first-name">
-      <Input type="text" name="first-name" placeholder="first name" />
+      <Input type="text" name="first-name" placeholder="first name" autocomplete="given-name" />
     </div>
     <div id="last-name">
-      <Input type="text" name="last-name" placeholder="last name" />
+      <Input type="text" name="last-name" placeholder="last name" autocomplete="family-name" />
     </div>
     <div id="user-name">
-      <Input type="text" name="user-name" placeholder="user name" />
+      <Input type="text" name="user-name" placeholder="user name" autocomplete="username" />
     </div>
     <div id="email">
-      <Input type="email" name="email" placeholder="e-mail" />
+      <Input type="email" name="email" placeholder="e-mail" autocomplete="email" />
     </div>
     <div id="password">
-      <Input type="password" name="password" placeholder="password" />
+      <Input type="password" name="password" placeholder="password" autocomplete="new-password" />
     </div>
     <div id="repeat-password">
-      <Input type="password" name="repeat-password" placeholder="repeat password" />
+      <Input type="password" name="repeat-password" placeholder="repeat password" autocomplete="new-password" />
     </div>
     <div id="city">
-      <Input type="text" name="city" placeholder="city" />
+      <Input type="text" name="city" placeholder="city" autocomplete="address-level2" />
     </div>
     <div id="localization">
-      <Input type="select" name="localization" options="de,en" autocomplete />
+      <Input type="select" name="localization" options="de,en"/>
     </div>
     <div id="terms">
       <Input type="checkbox" name="terms" placeholder="I read and agree to <a href='https://google.com' target='_blank'>Terms & Conditions</a>" />
