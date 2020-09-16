@@ -5,6 +5,7 @@
   import InputCheckbox from './Inputs/Checkbox.svelte';
   import InputRadio from './Inputs/Radio.svelte';
   import InputDate from './Inputs/Date.svelte';
+  import InputEmail from './Inputs/Email.svelte';
 
   import {
     generateComponentId,
@@ -15,6 +16,7 @@
     text: InputText,
     radio: InputRadio,
     date: InputDate,
+    email: InputEmail,
   };
 </script>
 
