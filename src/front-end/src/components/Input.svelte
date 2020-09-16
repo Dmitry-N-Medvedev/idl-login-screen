@@ -6,6 +6,7 @@
   import InputRadio from './Inputs/Radio.svelte';
   import InputDate from './Inputs/Date.svelte';
   import InputEmail from './Inputs/Email.svelte';
+  import InputPassword from './Inputs/Password.svelte';
 
   import {
     generateComponentId,
@@ -17,6 +18,7 @@
     radio: InputRadio,
     date: InputDate,
     email: InputEmail,
+    password: InputPassword,
   };
 </script>
 
