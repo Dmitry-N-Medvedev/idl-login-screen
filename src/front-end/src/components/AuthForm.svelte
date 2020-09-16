@@ -108,7 +108,7 @@
   #auth-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     grid-template-areas:
       'position-selector-title position-control'
       'date-of-birth legal-guardian-email'
@@ -116,6 +116,7 @@
       'user-name email'
       'password repeat-password'
       'city localization'
+      'terms marketing'
     ;
     grid-gap: 0.5vw;
   }
@@ -166,6 +167,14 @@
 
   #localization {
     grid-area: localization;
+  }
+
+  #terms {
+    grid-area: terms;
+  }
+
+  #marketing {
+    grid-area: marketing;
   }
 </style>
 
@@ -232,6 +241,12 @@
     </div>
     <div id="localization">
       <Input type="select" name="localization" />
+    </div>
+    <div id="terms">
+      <Input type="checkbox" name="terms" hint="I read and agree to <a href='https://google.com'>Terms & Conditions</a>" />
+    </div>
+    <div id="marketing">
+      <Input type="checkbox" name="marketing" hint="I'd like to get marketing promotions, special offers from KickID" checked />
     </div>
   </div>
 </form>

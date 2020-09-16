@@ -1,11 +1,22 @@
 <script>
   import Icon from 'fa-svelte';
-
   import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt.js';
+  import InputText from './Inputs/Text.svelte';
+  import Checkbox from './Inputs/Checkbox.svelte';
+  import AuthForm from './AuthForm.svelte';
+
+  import {
+    generateComponentId,
+  } from './helpers/generateComponentId.mjs';
 
   export let hint = '';
   export let type = 'text';
   export let name;
+
+  const components = {
+    checkbox: Checkbox,
+    text: InputText,
+  };
 </script>
 
 <style>
@@ -44,6 +55,6 @@
 </style>
 
 <div class="input" data-type={type} data-name={name}>
-  <div class="input-hint">{hint}</div>
-  <Icon icon={faCalendarAlt}></Icon>
+  <div class="input-hint">{@html hint}</div>
+  <svelte:component this={components[type]} id={generateComponentId(5)} {name} {...$$props} />
 </div>
