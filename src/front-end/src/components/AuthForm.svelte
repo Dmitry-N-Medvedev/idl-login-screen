@@ -5,11 +5,31 @@
   import GoogleIcon from '../../static/social-network-icons/google.svg';
   import AppleIcon from '../../static/social-network-icons/apple.svg';
 
+  import TabControl from './TabControl.svelte';
   import Input from './Input.svelte';
+
+  import LoginPanel from './AuthForm/LoginPanel.svelte';
+  import SignUpPanel from './AuthForm/SignUpPanel.svelte';
+
+  const tabContents = [
+    {
+      title: 'login',
+      component: LoginPanel,
+      active: false,
+    },
+    {
+      title: 'sign up',
+      component: SignUpPanel,
+      active: true,
+    },
+  ];
 </script>
-<style>
+
+<!--
+  <style>
   :root {
-    --auth-form-background-color: hsl(0, 0%, 21%);
+    --auth-form-background-color: hsl(210, 5%, 17%);
+    --auth-form-active-background-color: hsl(210, 5%, 25%);
     --facebook-icon-fill-color: hsl(0, 0%, 100%);
     --google-icon-fill-color: hsl(0, 0%, 100%);
     --apple-icon-fill-color: hsl(0, 0%, 100%);
@@ -31,8 +51,6 @@
     background-color: var(--auth-form-background-color);
     width: 50vh;
     height: 50vh;
-
-    color: white;
   }
 
   #tabs {
@@ -51,10 +69,13 @@
     align-items: center;
 
     text-transform: uppercase;
-    color: white;
 
     pointer-events: all;
     cursor: pointer;
+  }
+
+  #tabs > .tab.activeSurface {
+    background-color: var(--auth-form-active-background-color);
   }
 
   #auth-social {
@@ -67,7 +88,6 @@
     display: flex;
 
     text-transform: capitalize;
-    color: white;
   }
 
   #auth-social-networks {
@@ -83,8 +103,6 @@
   .auth-social-network {
     display: flex;
     justify-content: center;
-
-    color: white;
   }
 
   #auth-social-networks > .auth-social-network:first-of-type {
@@ -184,74 +202,82 @@
     grid-area: marketing;
   }
 </style>
+-->
 
-<form id="auth-form">
+<TabControl contents={tabContents} />
+
+<!--
+  <article id="auth-form">
   <ul id="tabs">
     <li class="tab">login</li>
-    <li class="tab">sign up</li>
+    <li class="tab activeSurface">sign up</li>
   </ul>
-  <div id="auth-social">
-    <div id="auth-social-caption">sign up by using</div>
-    <ul id="auth-social-networks">
-      <li class="auth-social-network">
-        <CircularImageButton>
-          <FacebookIcon width="0.75vw" fill="var(--facebook-icon-fill-color)" />
-        </CircularImageButton>
-      </li>
-      <li class="auth-social-network">
-        <CircularImageButton>
-          <GoogleIcon width="0.75vw" fill="var(--google-icon-fill-color)" />
-        </CircularImageButton>
-      </li>
-      <li class="auth-social-network">
-        <CircularImageButton>
-          <AppleIcon width="0.75vw" fill="var(--apple-icon-fill-color)" />
-        </CircularImageButton>
-      </li>
-    </ul>
-  </div>
-  <div id="auth-or-devider">or</div>
-  <div id="auth-panel">
-    <div id="position-selector-title">what is your position?</div>
-    <div id="position-control">
-      <Input type="radio" id="position-coach" name="position" value="coach" label="coach" checked />
-      <Input type="radio" id="position-player" name="position" value="player" label="player" />
+  <form id="sign-in-form" class="panel"></article>
+  <form id="sign-up-form" class="panel activeSurface">
+    <div id="auth-social">
+      <div id="auth-social-caption">sign up by using</div>
+      <ul id="auth-social-networks">
+        <li class="auth-social-network">
+          <CircularImageButton>
+            <FacebookIcon width="0.75vw" fill="var(--facebook-icon-fill-color)" />
+          </CircularImageButton>
+        </li>
+        <li class="auth-social-network">
+          <CircularImageButton>
+            <GoogleIcon width="0.75vw" fill="var(--google-icon-fill-color)" />
+          </CircularImageButton>
+        </li>
+        <li class="auth-social-network">
+          <CircularImageButton>
+            <AppleIcon width="0.75vw" fill="var(--apple-icon-fill-color)" />
+          </CircularImageButton>
+        </li>
+      </ul>
     </div>
-    <div id="date-of-birth">
-      <Input type="date" name="date-of-birth" placeholder="date of birth" autocomplete="bday" />
+    <div id="auth-or-devider">or</div>
+    <div id="auth-panel">
+      <div id="position-selector-title">what is your position?</div>
+      <div id="position-control">
+        <Input type="radio" id="position-coach" name="position" value="coach" label="coach" checked />
+        <Input type="radio" id="position-player" name="position" value="player" label="player" />
+      </div>
+      <div id="date-of-birth">
+        <Input type="date" name="date-of-birth" placeholder="date of birth" autocomplete="bday" />
+      </div>
+      <div id="legal-guardian-email">
+        <Input type="email" name="legal-guardian-email" placeholder="legal guardian e-mail" />
+      </div>
+      <div id="first-name">
+        <Input type="text" name="first-name" placeholder="first name" autocomplete="given-name" />
+      </div>
+      <div id="last-name">
+        <Input type="text" name="last-name" placeholder="last name" autocomplete="family-name" />
+      </div>
+      <div id="user-name">
+        <Input type="text" name="user-name" placeholder="user name" autocomplete="username" />
+      </div>
+      <div id="email">
+        <Input type="email" name="email" placeholder="e-mail" autocomplete="email" />
+      </div>
+      <div id="password">
+        <Input type="password" name="password" placeholder="password" autocomplete="new-password" />
+      </div>
+      <div id="repeat-password">
+        <Input type="password" name="repeat-password" placeholder="repeat password" autocomplete="new-password" />
+      </div>
+      <div id="city">
+        <Input type="text" name="city" placeholder="city" autocomplete="address-level2" />
+      </div>
+      <div id="localization">
+        <Input type="select" name="localization" options="de,en"/>
+      </div>
+      <div id="terms">
+        <Input type="checkbox" name="terms" placeholder="I read and agree to <a href='https://google.com' target='_blank'>Terms & Conditions</a>" />
+      </div>
+      <div id="marketing">
+        <Input type="checkbox" name="marketing" placeholder="I'd like to get marketing promotions, special offers from KickID" checked />
+      </div>
     </div>
-    <div id="legal-guardian-email">
-      <Input type="email" name="legal-guardian-email" placeholder="legal guardian e-mail" />
-    </div>
-    <div id="first-name">
-      <Input type="text" name="first-name" placeholder="first name" autocomplete="given-name" />
-    </div>
-    <div id="last-name">
-      <Input type="text" name="last-name" placeholder="last name" autocomplete="family-name" />
-    </div>
-    <div id="user-name">
-      <Input type="text" name="user-name" placeholder="user name" autocomplete="username" />
-    </div>
-    <div id="email">
-      <Input type="email" name="email" placeholder="e-mail" autocomplete="email" />
-    </div>
-    <div id="password">
-      <Input type="password" name="password" placeholder="password" autocomplete="new-password" />
-    </div>
-    <div id="repeat-password">
-      <Input type="password" name="repeat-password" placeholder="repeat password" autocomplete="new-password" />
-    </div>
-    <div id="city">
-      <Input type="text" name="city" placeholder="city" autocomplete="address-level2" />
-    </div>
-    <div id="localization">
-      <Input type="select" name="localization" options="de,en"/>
-    </div>
-    <div id="terms">
-      <Input type="checkbox" name="terms" placeholder="I read and agree to <a href='https://google.com' target='_blank'>Terms & Conditions</a>" />
-    </div>
-    <div id="marketing">
-      <Input type="checkbox" name="marketing" placeholder="I'd like to get marketing promotions, special offers from KickID" checked />
-    </div>
-  </div>
-</form>
+  </form>
+</article>
+-->
