@@ -245,7 +245,7 @@
       <Input type="text" name="city" placeholder="city" />
     </div>
     <div id="localization">
-      <Input type="select" name="localization" />
+      <Input type="select" name="localization" options="de,en" autocomplete />
     </div>
     <div id="terms">
       <Input type="checkbox" name="terms" placeholder="I read and agree to <a href='https://google.com' target='_blank'>Terms & Conditions</a>" />

@@ -7,6 +7,7 @@
   import InputDate from './Inputs/Date.svelte';
   import InputEmail from './Inputs/Email.svelte';
   import InputPassword from './Inputs/Password.svelte';
+  import InputSelect from './Inputs/Select.svelte';
 
   import {
     generateComponentId,
@@ -19,6 +20,7 @@
     date: InputDate,
     email: InputEmail,
     password: InputPassword,
+    select: InputSelect,
   };
 </script>
 
