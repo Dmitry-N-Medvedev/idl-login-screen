@@ -2,10 +2,6 @@
   import Input from '../../Input.svelte';
 
   export let signupUserInfo;
-
-  $: if (signupUserInfo) {
-    console.debug('signupUserInfo:', signupUserInfo);
-  }
 </script>
 
 <style>
@@ -80,6 +76,7 @@
   }
 </style>
 
+{#if signupUserInfo}
 <div class="SignUpUserInfo" {...$$restProps}>
   <div id="suui-position-selector-title" class="suui-cell">{signupUserInfo.position.title}</div>
   <div id="suui-position-control" class="suui-cell">
@@ -118,3 +115,4 @@
     <Input type="select" {...signupUserInfo.localization} />
   </div>
 </div>
+{/if}
