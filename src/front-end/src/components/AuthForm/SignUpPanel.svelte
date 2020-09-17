@@ -1,9 +1,78 @@
 <script>
+  import { onMount, onDestroy } from 'svelte';
+
   import SignUpSocial from './SignUp/SignUpSocial.svelte';
   import SignUpOrDevider from './SignUp/SignUpOrDevider.svelte';
   import SignUpUserInfo from './SignUp/SignUpUserInfo.svelte';
   import SignUpOptions from './SignUp/SignUpOptions.svelte';
   import SignUpButton from './SignUp/SignUpButton.svelte';
+
+  const signupUserInfo = {
+    position: {
+      title: 'What is your position?',
+      items: [
+        {
+          checked: true,
+          label: 'coach',
+          name: 'position',
+          value: 'coach',
+        },
+        {
+          label: 'player',
+          name: 'position',
+          value: 'player',
+        },
+      ],
+    },
+    bday: {
+      autocomplete: 'bday',
+      name: 'date-of-birth',
+      placeholder: 'date of birth',
+    },
+    guardianEmail: {
+      name: 'legal-guardian-email',
+      placeholder: 'legal guardian e-mail',
+    },
+    firstName: {
+      autocomplete: 'given-name',
+      name: 'first-name',
+      placeholder: 'first name',
+    },
+    lastName: {
+      autocomplete: 'family-name',
+      name: 'last-name',
+      placeholder: 'last name',
+    },
+    userName: {
+      autocomplete: 'username',
+      name: 'user-name',
+      placeholder: 'user name',
+    },
+    email: {
+      autocomplete: 'email',
+      name: 'email',
+      placeholder: 'e-mail',
+    },
+    password: {
+      autocomplete: 'new-password',
+      name: 'password',
+      placeholder: 'password',
+    },
+    repeatPassword: {
+      autocomplete: 'new-password',
+      name: 'repeat-password',
+      placeholder: 'repeat password',
+    },
+    city: {
+      autocomplete: 'address-level2',
+      name: 'city',
+      placeholder: 'city',
+    },
+    localization: {
+      options: 'de,en',
+      name: 'localization',
+    },
+  };
 
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
@@ -11,6 +80,14 @@
 
     console.debug('handleSignUpSubmit', event);
   };
+
+  onMount(() => {
+    console.debug('SignUpPanel.onMount');
+  });
+
+  onDestroy(() => {
+    console.debug('SignUpPanel.onDestroy');
+  });
 </script>
 
 <style>
@@ -71,7 +148,7 @@
     <SignUpOrDevider title="or" />
   </div>
   <div id="sign-up-userinfo" class="sign-up-general-section">
-    <SignUpUserInfo />
+    <SignUpUserInfo {signupUserInfo} />
   </div>
   <div id="sign-up-options" class="sign-up-general-section">
     <SignUpOptions />

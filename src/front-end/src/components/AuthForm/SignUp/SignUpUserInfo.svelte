@@ -81,39 +81,40 @@
 </style>
 
 <div class="SignUpUserInfo" {...$$restProps}>
-  <div id="suui-position-selector-title" class="suui-cell">What is your position?</div>
+  <div id="suui-position-selector-title" class="suui-cell">{signupUserInfo.position.title}</div>
   <div id="suui-position-control" class="suui-cell">
-    <Input type="radio" id="position-coach" name="position" value="coach" label="coach" checked />
-    <Input type="radio" id="position-player" name="position" value="player" label="player" />
+    {#each signupUserInfo.position.items as position }
+      <Input type="radio" id="position-{position.value}" {...position} />
+    {/each}
   </div>
   <div id="suui-date-of-birth" class="suui-cell">
-    <Input type="date" name="date-of-birth" placeholder="date of birth" autocomplete="bday" />
+    <Input type="date" {...signupUserInfo.bday} />
   </div>
   <div id="suui-legal-guardian-email" class="suui-cell">
-    <Input type="email" name="legal-guardian-email" placeholder="legal guardian e-mail" />
+    <Input type="email" {...signupUserInfo.guardianEmail} />
   </div>
   <div id="suui-first-name" class="suui-cell">
-    <Input type="text" name="first-name" placeholder="first name" autocomplete="given-name" />
+    <Input type="text" {...signupUserInfo.firstName} />
   </div>
   <div id="suui-last-name" class="suui-cell">
-    <Input type="text" name="last-name" placeholder="last name" autocomplete="family-name" />
+    <Input type="text" {...signupUserInfo.lastName} />
   </div>
   <div id="suui-user-name" class="suui-cell">
-    <Input type="text" name="user-name" placeholder="user name" autocomplete="username" />
+    <Input type="text" {...signupUserInfo.userName} />
   </div>
   <div id="suui-email" class="suui-cell">
-    <Input type="email" name="email" placeholder="e-mail" autocomplete="email" />
+    <Input type="email" {...signupUserInfo.email} />
   </div>
   <div id="suui-password" class="suui-cell">
-    <Input type="password" name="password" placeholder="password" autocomplete="new-password" />
+    <Input type="password" {...signupUserInfo.password} />
   </div>
   <div id="suui-repeat-password" class="suui-cell">
-    <Input type="password" name="repeat-password" placeholder="repeat password" autocomplete="new-password" />
+    <Input type="password" {...signupUserInfo.repeatPassword} />
   </div>
   <div id="suui-city" class="suui-cell">
-    <Input type="text" name="city" placeholder="city" autocomplete="address-level2" />
+    <Input type="text" {...signupUserInfo.city} />
   </div>
   <div id="suui-localization" class="suui-cell">
-    <Input type="select" name="localization" options="de,en"/>
+    <Input type="select" {...signupUserInfo.localization} />
   </div>
 </div>
