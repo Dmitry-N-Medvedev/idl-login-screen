@@ -40,7 +40,7 @@
   .tabControlContainer {
     display: grid;
     grid-template-columns: 0.125fr 1fr 0.125fr;
-    grid-template-rows: 0.125fr 1fr 9fr 0.125fr;
+    grid-template-rows: 0.125fr 0.9fr 9fr 0.125fr;
     grid-template-areas:
       '. . .'
       '. tabButtonsContainer .'
@@ -49,8 +49,8 @@
     ;
 
     background-color: transparent;
-    width: 50vh;
-    height: 50vh;
+    width: 60vh;
+    height: 70vh;
 
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);

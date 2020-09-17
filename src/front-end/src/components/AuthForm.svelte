@@ -1,9 +1,9 @@
 <script>
-  import CircularImageButton from './CircularImageButton.svelte';
+  // import CircularImageButton from './CircularImageButton.svelte';
 
-  import FacebookIcon from '../../static/social-network-icons/facebook.svg';
-  import GoogleIcon from '../../static/social-network-icons/google.svg';
-  import AppleIcon from '../../static/social-network-icons/apple.svg';
+  // import FacebookIcon from '../../static/social-network-icons/facebook.svg';
+  // import GoogleIcon from '../../static/social-network-icons/google.svg';
+  // import AppleIcon from '../../static/social-network-icons/apple.svg';
 
   import TabControl from './TabControl.svelte';
   import Input from './Input.svelte';
