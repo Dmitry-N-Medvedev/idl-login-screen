@@ -92,8 +92,8 @@
     align-items: center;
 
     background-color: var(--auth-form-background-color);
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
+    /* border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius); */
 
     position: relative;
   }
@@ -129,14 +129,14 @@
   .tabContentContainer {
     z-index: -1;
 
-    padding: 1.5vh 1vw;
+    /* padding: 1.5vh 1vw; */
   }
   
   .tabContentVisible {
     z-index: 1;
     pointer-events: all;
 
-    border-top-left-radius: var(--border-radius);
+    /* border-top-left-radius: var(--border-radius); */
     /* border-top-right-radius: var(--border-radius); */
 
     background-color: var(--auth-form-active-background-color);
