@@ -12,6 +12,8 @@
 
     margin: 0 0 0 0.5vw;
 
+    cursor: pointer;
+
     transition: 0.8s background-color ease-out;
   }
 
