@@ -4,6 +4,13 @@
   import SignUpUserInfo from './SignUp/SignUpUserInfo.svelte';
   import SignUpOptions from './SignUp/SignUpOptions.svelte';
   import SignUpButton from './SignUp/SignUpButton.svelte';
+
+  const handleSignUpSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.debug('handleSignUpSubmit', event);
+  };
 </script>
 
 <style>
@@ -56,7 +63,7 @@
   }
 </style>
 
-<article id="sign-up-screen">
+<form id="sign-up-screen" on:submit={handleSignUpSubmit}>
   <div id="sign-up-social" class="sign-up-general-section">
     <SignUpSocial title="sign up by using" />
   </div>
@@ -72,4 +79,4 @@
   <div id="sign-up-button" class="sign-up-general-section">
     <SignUpButton />
   </div>
-</article>
+</form>
