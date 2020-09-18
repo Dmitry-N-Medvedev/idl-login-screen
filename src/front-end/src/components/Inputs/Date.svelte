@@ -1,7 +1,16 @@
 <script>
-  // import Icon from 'fa-svelte';
-  // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt.js';
+  import { createEventDispatcher } from 'svelte';
   import ControlContainer from '../ControlContainer.svelte';
+
+  const dispatch = createEventDispatcher();
+
+  let selectedDate;
+
+  $: if (selectedDate) {
+    dispatch('message', {
+      payload: selectedDate
+    });
+  }
 </script>
 
 <style>
@@ -24,5 +33,5 @@
 </style>
 
 <ControlContainer>
-  <input type="date" {...$$props} {...$$restProps} class="inputDate" />
+  <input type="date" {...$$props} {...$$restProps} class="inputDate" bind:value={selectedDate} />
 </ControlContainer>

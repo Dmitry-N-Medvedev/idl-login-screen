@@ -1,6 +1,5 @@
 <script>
-  // import Icon from 'fa-svelte';
-  // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt.js';
+  import { createEventDispatcher } from 'svelte';
   import InputText from './Inputs/Text.svelte';
   import InputCheckbox from './Inputs/Checkbox.svelte';
   import InputRadio from './Inputs/Radio.svelte';
@@ -13,6 +12,8 @@
     generateComponentId,
   } from './helpers/generateComponentId.mjs';
 
+  const dispatch = createEventDispatcher();
+
   const components = {
     checkbox: InputCheckbox,
     text: InputText,
@@ -22,6 +23,10 @@
     password: InputPassword,
     select: InputSelect,
   };
+
+  const handleInputMessage = (event) => {
+    dispatch('message', event.detail);
+  };
 </script>
 
-<svelte:component this={components[$$restProps['type']]} id={generateComponentId(5)} {...$$props} {...$$restProps} />
+<svelte:component this={components[$$restProps['type']]} id={generateComponentId({ keyLength: 5 })} {...$$props} {...$$restProps} on:message={handleInputMessage} />

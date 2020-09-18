@@ -5,11 +5,17 @@
 
   export let contents;
 
+  let activeContent;
+
   $: if (contents) {
     contents = contents.map((content) => ({
-      id: generateComponentId(5),
+      id: generateComponentId({ keyLength: 5 }),
       ...content,
     }));
+  }
+
+  $: if (activeContent) {
+    console.debug('activeContent:', activeContent);
   }
 
   const generateTabButtonId = (currentId) => `${currentId}-tabButton`;
@@ -24,7 +30,7 @@
     });
   };
 
-  const radioGroupName = generateComponentId(5);
+  const radioGroupName = generateComponentId({ keyLength: 5 });
 </script>
 
 <style>
@@ -147,7 +153,7 @@
   <section class="tabButtonsContainer">
     {#each contents as content}
       <div class="tabButton">
-        <input id={generateTabButtonId(content.id)} type="radio" name={radioGroupName} class="hiddenRadio" checked={content.active} />
+        <input id={generateTabButtonId(content.id)} type="radio" name={radioGroupName} class="hiddenRadio" checked={content.active} bind:group={activeContent} />
         <label for={generateTabButtonId(content.id)} class="tabTitle" on:click={handleTabButtonClick(content.id)}>{content.title}</label>
       </div>
     {/each}

@@ -1,5 +1,15 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import ControlContainer from '../ControlContainer.svelte';
+
+  const dispatch = createEventDispatcher();
+  let password;
+
+  $: if (password) {
+    dispatch('message', {
+      payload: password,
+    });
+  }
 </script>
 <style>
   .passwordInput {
@@ -19,5 +29,5 @@
 </style>
 
 <ControlContainer>
-  <input class="passwordInput" type="password" {...$$props} {...$$restProps} />
+  <input class="passwordInput" type="password" {...$$props} {...$$restProps} bind:value={password} />
 </ControlContainer>

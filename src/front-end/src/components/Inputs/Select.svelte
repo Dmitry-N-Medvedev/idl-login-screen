@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import ControlContainer from '../ControlContainer.svelte';
   import {
     generateComponentId,
@@ -6,10 +7,19 @@
 
   export let options;
 
+  const dispatch = createEventDispatcher();
+
   let datalist;
+  let selectedValue;
 
   $: if (options) {
     datalist = options.split(',');
+  }
+
+  $: if (selectedValue) {
+    dispatch('message', {
+      payload: selectedValue,
+    });
   }
 </script>
 <style>
@@ -31,7 +41,7 @@
 
 <ControlContainer>
   {#if datalist}
-    <select {...$$props} {...$$restProps} class="selectInput">
+    <select {...$$props} {...$$restProps} class="selectInput" bind:value={selectedValue}>
       {#each datalist as option}
         <option value={option}>{option.toUpperCase()}</option>
       {/each}
