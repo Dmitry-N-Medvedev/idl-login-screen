@@ -1,11 +1,15 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-
   import SignUpSocial from './SignUp/SignUpSocial.svelte';
   import SignUpOrDevider from './SignUp/SignUpOrDevider.svelte';
   import SignUpUserInfo from './SignUp/SignUpUserInfo.svelte';
   import SignUpOptions from './SignUp/SignUpOptions.svelte';
   import SignUpButton from './SignUp/SignUpButton.svelte';
+  import {
+    BroadcastChannelNames,
+  } from '../../constants/BroadcastChannelNames.mjs';
+
+  let signupUserInfoBroadcastChannel;
 
   const signupUserInfo = {
     position: {
@@ -82,15 +86,17 @@
   };
 
   const handleSignUpUserInfoPopulated = ({ detail }) => {
-    console.debug('handleSignUpUserInfoPopulated', detail);
+    signupUserInfoBroadcastChannel.postMessage(detail);
   };
 
   onMount(() => {
-    console.debug('SignUpPanel.onMount');
+    signupUserInfoBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.SignUpUserInfoPopulated);
   });
 
   onDestroy(() => {
-    console.debug('SignUpPanel.onDestroy');
+    if (signupUserInfoBroadcastChannel) {
+      signupUserInfoBroadcastChannel.close();
+    }
   });
 </script>
 
