@@ -37,6 +37,11 @@
   .selectInput:focus {
     outline: none;
   }
+
+  .sendingData {
+    filter: blur(5px);
+    background-color: brown;
+  }
 </style>
 
 <ControlContainer>

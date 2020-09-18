@@ -1,11 +1,14 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import {
+    BroadcastChannelNames,
+  } from '../../../constants/BroadcastChannelNames.mjs';
   import Input from '../../Input.svelte';
   import PositionSelector from './PositionSelector.svelte';
 
   export let signupUserInfo;
 
-  const dispatch = createEventDispatcher();
+  let userInfoFieldChangeBroadcastChannel;
   const userInfo = {
     position: (signupUserInfo?.position?.items?.find((position) => position.checked === true))?.value,
     bday: null,
@@ -19,21 +22,26 @@
     city: null,
     localization: null,
   };
-  const reactToUserInfoChange = (info) => {
-    if (Object.values(info).some((value) => value === null) === false) {
-      dispatch('message', userInfo);
-    }
-  };
 
   const handleFieldChange = ({ key, event }) => {
-    userInfo[key] = event.detail.payload;
-    userInfo = userInfo; // this syntactic sugar notifies Svelte on the fact that the userInfo object has changed
+    userInfoFieldChangeBroadcastChannel.postMessage({ key, payload: event.detail.payload });
   };
 
-  $: if (userInfo) {
-    reactToUserInfoChange(userInfo);
-  }
- 
+  onMount(() => {
+    userInfoFieldChangeBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.UserInfoFieldChangeBroadcastChannel);
+
+    userInfoFieldChangeBroadcastChannel.onmessage = ({ data: { key, payload } }) => {
+      const isChangeSuccessfull = payload === true ? '' : 'not';
+
+      console.debug(`${key}'s field content change was ${isChangeSuccessfull} successfull`.replace('  ', ' '));
+    };
+  });
+
+  onDestroy(() => {
+    if (userInfoFieldChangeBroadcastChannel) {
+      userInfoFieldChangeBroadcastChannel.close();
+    }
+  });
 </script>
 
 <style>

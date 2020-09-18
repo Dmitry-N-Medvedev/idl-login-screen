@@ -7,6 +7,7 @@ import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import svelteSVG from 'rollup-plugin-svelte-svg';
 import pkg from './package.json';
+import OMT from "@surma/rollup-plugin-off-main-thread";
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -19,8 +20,9 @@ const onwarn = (warning, onwarn) => (warning.code === 'MISSING_EXPORT' && /'prel
 export default {
   client: {
     input: config.client.input(),
-    output: config.client.output(),
+    output: {...config.client.output(), ...{ format: 'esm' }},
     plugins: [
+      OMT(),
       svelteSVG({
         dev,
       }),
@@ -67,8 +69,9 @@ export default {
 
   server: {
     input: config.server.input(),
-    output: config.server.output(),
+    output: {...config.server.output(), ...{ format: 'esm' }},
     plugins: [
+      OMT(),
       svelteSVG({
         generate: 'ssr',
         dev,
@@ -95,7 +98,7 @@ export default {
 
   serviceworker: {
     input: config.serviceworker.input(),
-    output: config.serviceworker.output(),
+    output: {...config.serviceworker.output(), ...{ format: 'esm' }},
     plugins: [
       resolve(),
       replace({
