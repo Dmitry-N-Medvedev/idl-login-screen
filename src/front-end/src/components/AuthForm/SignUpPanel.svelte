@@ -81,6 +81,10 @@
     console.debug('handleSignUpSubmit', event);
   };
 
+  const handleSignUpUserInfoPopulated = ({ detail }) => {
+    console.debug('handleSignUpUserInfoPopulated', detail);
+  };
+
   onMount(() => {
     console.debug('SignUpPanel.onMount');
   });
@@ -148,7 +152,7 @@
     <SignUpOrDevider title="or" />
   </div>
   <div id="sign-up-userinfo" class="sign-up-general-section">
-    <SignUpUserInfo {signupUserInfo} />
+    <SignUpUserInfo {signupUserInfo} on:message={handleSignUpUserInfoPopulated} />
   </div>
   <div id="sign-up-options" class="sign-up-general-section">
     <SignUpOptions />
