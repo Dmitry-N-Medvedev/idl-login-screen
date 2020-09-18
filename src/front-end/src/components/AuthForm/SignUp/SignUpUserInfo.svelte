@@ -1,12 +1,13 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import Input from '../../Input.svelte';
+  import PositionSelector from './PositionSelector.svelte';
 
   export let signupUserInfo;
 
   const dispatch = createEventDispatcher();
   const userInfo = {
-    position: null,
+    position: (signupUserInfo?.position?.items?.find((position) => position.checked === true))?.value,
     bday: null,
     guardianEmail: null,
     firstName: null,
@@ -19,18 +20,12 @@
     localization: null,
   };
   const reactToUserInfoChange = (info) => {
-    console.debug('reactToUserInfoChange', info);
-
     if (Object.values(info).some((value) => value === null) === false) {
-      console.debug('OK. userInfo is fully populated');
-
       dispatch('message', userInfo);
     }
   };
 
   const handleFieldChange = ({ key, event }) => {
-    console.debug('handleFieldChange', key, event);
-
     userInfo[key] = event.detail.payload;
     userInfo = userInfo; // this syntactic sugar notifies Svelte on the fact that the userInfo object has changed
   };
@@ -117,9 +112,7 @@
 <div class="SignUpUserInfo" {...$$restProps}>
   <div id="suui-position-selector-title" class="suui-cell">{signupUserInfo.position.title}</div>
   <div id="suui-position-control" class="suui-cell">
-    {#each signupUserInfo.position.items as position }
-      <Input type="radio" id="position-{position.value}" {...position} on:message={(event) => handleFieldChange({ key: 'position', event})} />
-    {/each}
+    <PositionSelector positions={signupUserInfo.position.items} on:message={(event) => handleFieldChange({ key: 'position', event})} />
   </div>
   <div id="suui-date-of-birth" class="suui-cell">
     <Input type="date" {...signupUserInfo.bday} on:message={(event) => handleFieldChange({ key: 'bday', event})} />

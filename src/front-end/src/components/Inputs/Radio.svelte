@@ -2,16 +2,17 @@
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
+  let value;
 
-  let group;
-
-  $: if (group) {
-    console.debug('group', group);
-
-    dispatch('message', {
-      payload: group,
-    });
+  $: if (value) {
+    console.debug('value', value);
   }
+
+  const handleInput = () => {
+    dispatch('message', {
+      payload: $$restProps['value'],
+    });
+  };
 </script>
 
 <style>
@@ -48,5 +49,5 @@
   }
 </style>
 
-<input type="radio" {...$$props} {...$$restProps} class="radioInput" bind:group={group} />
+<input type="radio" {...$$props} {...$$restProps} class="radioInput" on:input={handleInput} bind:value={value} autocomplete />
 <label for={$$restProps['id']} class="radioLabel">{$$restProps['label']}</label>
