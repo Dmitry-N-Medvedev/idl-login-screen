@@ -6,8 +6,6 @@
   let text;
 
   $: if (text) {
-    console.debug('text changed', text);
-
     dispatch('message', {
       payload: text,
     });
