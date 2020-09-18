@@ -1,5 +1,17 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import ControlContainer from '../ControlContainer.svelte';
+
+  const dispatch = createEventDispatcher();
+  let text;
+
+  $: if (text) {
+    console.debug('text changed', text);
+
+    dispatch('message', {
+      payload: text,
+    });
+  }
 </script>
 <style>
   .textInput {
@@ -19,5 +31,5 @@
 </style>
 
 <ControlContainer>
-  <input class="textInput" type="text" {...$$props} {...$$restProps} />
+  <input class="textInput" type="text" {...$$props} {...$$restProps} bind:value={text} />
 </ControlContainer>
