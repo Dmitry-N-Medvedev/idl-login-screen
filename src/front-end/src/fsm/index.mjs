@@ -1,43 +1,68 @@
-import signUpFSMURL from 'omt:./SignUp.js';
+import {
+  fixOmtPath,
+} from '../helpers/fixOmtPath.mjs';
+import signUpFSMURL from 'omt:./SignUp.fsm.mjs';
+import {
+  FsmProtocolMessages,
+} from '../constants/FsmProtocolMessages.mjs';
 
 const fsms = {
   signUpFSM: {
-    modulePath: `client/${signUpFSMURL.slice(2)}`,
+    modulePath: fixOmtPath(signUpFSMURL),
     object: null,
+    state: null,
   },
 };
 
 export const initializeFSM = async () => {
-  for await (const [name, fsm] of Object.entries(fsms)) {
-    console.debug('for:', name, fsm);
+  const createFsms = () => {
+    for (const [name, fsm] of Object.entries(fsms)) {
+      try {
+        fsm.object = new Worker(fsm.modulePath, {
+          type: 'module',
+          name,
+        });
+      } catch (error) {
+        console.error(error);
 
-    try {
-      fsm.object = new Worker(fsm.modulePath, {
-        type: 'module',
-        name,
-      });
-
-      fsm.object.onmessage = (event) => {
-        console.debug('message from fsm', event);
-      };
-  
-      fsm.object.postMessage({ hello: 'world' });
-    } catch (error) {
-      console.error(error);
+        throw error;
+      }
     }
+  };
+  const startFsms = () => new Promise((resolve, reject) => {
+    const setFsmState = (fsmName, fsmState) => {
+      (fsms[fsmName]).state = fsmState;
 
-    console.debug(`FSM.initialized: ${name}`, fsm.object);
-  }
+      if (Object.values(fsms).some((fsm) => fsm.state !== FsmProtocolMessages.started.type) === false) {
+        return resolve();
+      }
+    };
 
-  console.debug('ALL FSM have been initialized');
+    for (const [name, fsm] of Object.entries(fsms)) {
+      try {
+        fsm.object.onmessage = ({ data }) => {
+          setFsmState(name, data.type);
+
+          fsm.object.onmessage = null;
+          };
+  
+        fsm.object.postMessage(FsmProtocolMessages.start);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
+
+  createFsms();
+  await startFsms();
 };
 
 export const finalizeFSM = () => {
-  Object.entries(fsms).forEach(([name, fsm]) => {
-    fsm.finalize();
+  for (const [name, fsm] of Object.entries(fsms)) {
+    fsm.object.postMessage(FsmProtocolMessages.stop);
+  }
 
-    console.debug(`FSM.finalized: ${name}`);
-  });
-
-  console.debug('ALL FSM have been finalized');
+  for (const [name, fsm] of Object.entries(fsms)) {
+    fsm.object.terminate();
+  }
 };
