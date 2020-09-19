@@ -1,5 +1,5 @@
-export const serializeSignUpUserInfo = async (message) => {
-  console.debug('serializeSignUpUserInfo', message);
+const encoder = new TextEncoder();
 
-  throw new Error('serializeSignUpUserInfo not implemented yet');
+export const serializeSignUpUserInfo = async (message) => {
+  return encoder.encode(JSON.stringify(message));
 }
