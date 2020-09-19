@@ -92,11 +92,17 @@
     userInfoFieldChangeBroadcastChannel.postMessage(SignUpProtocolMessages.SubmitSignUpInfo());
   };
 
-  const handleUserInfoFieldChangeBroadcastChannelMessage = ({ data }) => {
-    console.debug('handleUserInfoFieldChangeBroadcastChannelMessage:', data);
+  const handleUserInfoFieldChangeBroadcastChannelMessage = ({ data: { key, payload, type } }) => {
 
-    if (data.type === SignUpProtocolMessageTypes.AllFieldsPopulated) {
-      signupButtonEnabled = true;
+    switch (type) {
+      case SignUpProtocolMessageTypes.AllFieldsPopulated: {
+        signupButtonEnabled = true;
+
+        break;
+      }
+      default: {
+        break;
+      }
     }
   };
 

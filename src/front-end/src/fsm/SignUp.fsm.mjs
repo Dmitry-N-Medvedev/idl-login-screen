@@ -13,38 +13,37 @@ import {
 } from '../constants/SignUpUserInfoStructure.mjs';
 
 let userInfoFieldChangeBroadcastChannel = null;
+let serverCommunicatorBroadcastChannel = null;
 
 const signUpUserInfo = Object.assign({}, SignUpUserInfoStructure);
 
 const isAllSignUpUserInfoFieldsPopulated = (userInfo) => Object.values(userInfo.payload).some((value) => value === null) === false;
 
 const handleUserInfoFieldChangeMessage = ({ data: { type, key, payload }}) => {
-  console.debug('FSM SignUp::handleUserInfoFieldChangeMessage', type, key, payload);
-
   switch(type) {
     case SignUpProtocolMessageTypes.FieldValueChanged: {
       signUpUserInfo.payload[key] = payload;
     
-      console.debug('signUpUserInfo', signUpUserInfo);
-    
       if (isAllSignUpUserInfoFieldsPopulated(signUpUserInfo)) {
-        console.debug('signUpUserInfo: all fields are populated', signUpUserInfo);
-    
         userInfoFieldChangeBroadcastChannel.postMessage(SignUpProtocolMessages.AllFieldsPopulated());
       }
 
       break;
     }
     case SignUpProtocolMessageTypes.SubmitSignUpInfo: {
-      console.debug('FSM SignUp::handleUserInfoFieldChangeMessage', type);
+      serverCommunicatorBroadcastChannel.postMessage(signUpUserInfo);
       break;
     }
-    default: {}
+    default: {
+      break;
+    }
   }
 
 };
 
 const start = () => {
+  serverCommunicatorBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.ServerCommunicatorBroadcastChannel);
+
   userInfoFieldChangeBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.UserInfoFieldChangeBroadcastChannel);
   userInfoFieldChangeBroadcastChannel.onmessage = handleUserInfoFieldChangeMessage;
 
@@ -55,6 +54,11 @@ const stop = () => {
   if (userInfoFieldChangeBroadcastChannel) {
     userInfoFieldChangeBroadcastChannel.onmessage = null;
     userInfoFieldChangeBroadcastChannel.stop();
+  }
+
+  if (serverCommunicatorBroadcastChannel) {
+    serverCommunicatorBroadcastChannel.onmessage = null;
+    serverCommunicatorBroadcastChannel.stop();
   }
 
   self.postMessage(FsmProtocolMessages.stopped);
