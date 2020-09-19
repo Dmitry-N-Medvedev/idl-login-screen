@@ -2,11 +2,17 @@ import {
   fixOmtPath,
 } from '../helpers/fixOmtPath.mjs';
 import signUpFSMURL from 'omt:./SignUp.fsm.mjs';
+import serverCommunicatorFsmURL from 'omt:./serverCommunicator.fsm.mjs';
 import {
   FsmProtocolMessages,
 } from '../constants/FsmProtocolMessages.mjs';
 
 const fsms = {
+  serverCommunicator: {
+    modulePath: fixOmtPath(serverCommunicatorFsmURL),
+    object: null,
+    state: null,
+  },
   signUpFSM: {
     modulePath: fixOmtPath(signUpFSMURL),
     object: null,
