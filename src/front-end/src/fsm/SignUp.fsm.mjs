@@ -8,31 +8,22 @@ import {
   SignUpProtocolMessageTypes,
   SignUpProtocolMessages,
 } from '../constants/SignUpProtocolMessages.mjs';
+import {
+  SignUpUserInfoStructure,
+} from '../constants/SignUpUserInfoStructure.mjs';
 
 let userInfoFieldChangeBroadcastChannel = null;
 
-const signUpUserInfo = {
-  position: null,
-  bday: null,
-  guardianEmail: null,
-  firstName: null,
-  lastName: null,
-  userName: null,
-  email: null,
-  password: null,
-  repeatPassword: null,
-  city: null,
-  localization: null,
-};
+const signUpUserInfo = Object.assign({}, SignUpUserInfoStructure);
 
-const isAllSignUpUserInfoFieldsPopulated = (userInfo) => Object.values(signUpUserInfo).some((value) => value === null) === false;
+const isAllSignUpUserInfoFieldsPopulated = (userInfo) => Object.values(userInfo.payload).some((value) => value === null) === false;
 
 const handleUserInfoFieldChangeMessage = ({ data: { type, key, payload }}) => {
   console.debug('FSM SignUp::handleUserInfoFieldChangeMessage', type, key, payload);
 
   switch(type) {
     case SignUpProtocolMessageTypes.FieldValueChanged: {
-      signUpUserInfo[key] = payload;
+      signUpUserInfo.payload[key] = payload;
     
       console.debug('signUpUserInfo', signUpUserInfo);
     
