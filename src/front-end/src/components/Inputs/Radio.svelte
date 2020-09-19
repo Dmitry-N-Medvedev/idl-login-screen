@@ -1,18 +1,21 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
-  let value;
-
-  $: if (value) {
-    console.debug('value', value);
-  }
 
   const handleInput = () => {
     dispatch('message', {
       payload: $$restProps['value'],
     });
   };
+
+  onMount(() => {
+    if ($$restProps['checked'] === true) {
+      dispatch('message', {
+        payload: $$restProps['value'],
+      });
+    }
+  });
 </script>
 
 <style>
@@ -49,5 +52,5 @@
   }
 </style>
 
-<input type="radio" {...$$props} {...$$restProps} class="radioInput" on:input={handleInput} bind:value={value} autocomplete />
+<input type="radio" {...$$props} {...$$restProps} class="radioInput" on:input={handleInput} autocomplete />
 <label for={$$restProps['id']} class="radioLabel">{$$restProps['label']}</label>

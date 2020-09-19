@@ -1,15 +1,20 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+  import {
+    BroadcastChannelNames,
+  } from '../../constants/BroadcastChannelNames.mjs';
+  import {
+    SignUpProtocolMessageTypes,
+    SignUpProtocolMessages,
+  } from '../../constants/SignUpProtocolMessages.mjs';
+
   import SignUpSocial from './SignUp/SignUpSocial.svelte';
   import SignUpOrDevider from './SignUp/SignUpOrDevider.svelte';
   import SignUpUserInfo from './SignUp/SignUpUserInfo.svelte';
   import SignUpOptions from './SignUp/SignUpOptions.svelte';
   import SignUpButton from './SignUp/SignUpButton.svelte';
-  import {
-    BroadcastChannelNames,
-  } from '../../constants/BroadcastChannelNames.mjs';
 
-  let signupUserInfoBroadcastChannel;
+  let userInfoFieldChangeBroadcastChannel;
 
   const signupUserInfo = {
     position: {
@@ -78,24 +83,33 @@
     },
   };
 
+  let signupButtonEnabled = false;
+
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    console.debug('handleSignUpSubmit', event);
+    userInfoFieldChangeBroadcastChannel.postMessage(SignUpProtocolMessages.SubmitSignUpInfo());
   };
 
-  const handleSignUpUserInfoPopulated = ({ detail }) => {
-    signupUserInfoBroadcastChannel.postMessage(detail);
+  const handleUserInfoFieldChangeBroadcastChannelMessage = ({ data }) => {
+    console.debug('handleUserInfoFieldChangeBroadcastChannelMessage:', data);
+
+    if (data.type === SignUpProtocolMessageTypes.AllFieldsPopulated) {
+      signupButtonEnabled = true;
+    }
   };
 
   onMount(() => {
-    signupUserInfoBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.SignUpUserInfoPopulated);
+    userInfoFieldChangeBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.UserInfoFieldChangeBroadcastChannel);
+    userInfoFieldChangeBroadcastChannel.onmessage = handleUserInfoFieldChangeBroadcastChannelMessage;
   });
 
   onDestroy(() => {
-    if (signupUserInfoBroadcastChannel) {
-      signupUserInfoBroadcastChannel.close();
+    if (userInfoFieldChangeBroadcastChannel) {
+      userInfoFieldChangeBroadcastChannel.close();
+
+      userInfoFieldChangeBroadcastChannel = undefined;
     }
   });
 </script>
@@ -158,12 +172,12 @@
     <SignUpOrDevider title="or" />
   </div>
   <div id="sign-up-userinfo" class="sign-up-general-section">
-    <SignUpUserInfo {signupUserInfo} on:message={handleSignUpUserInfoPopulated} />
+    <SignUpUserInfo {signupUserInfo} />
   </div>
   <div id="sign-up-options" class="sign-up-general-section">
     <SignUpOptions />
   </div>
   <div id="sign-up-button" class="sign-up-general-section">
-    <SignUpButton />
+    <SignUpButton enabled={signupButtonEnabled} />
   </div>
 </form>

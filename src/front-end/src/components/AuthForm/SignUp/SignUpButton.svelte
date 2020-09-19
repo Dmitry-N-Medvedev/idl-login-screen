@@ -1,3 +1,7 @@
+<script>
+  export let enabled;
+</script>
+
 <style>
   :root {
     --sign-up-button-radius: calc(var(--input-height) / 2);
@@ -31,6 +35,9 @@
     cursor: pointer;
 
     filter: drop-shadow(1px 1px 4px var(--auth-form-background-color));
+
+    pointer-events: none;
+    filter: opacity(0.25);
   }
 
   .SignUpButton:focus,
@@ -39,8 +46,13 @@
 
     filter: drop-shadow(1px 1px 1px var(--auth-form-background-color));
   }
+
+  .enabled {
+    filter: none;
+    pointer-events: all;
+  }
 </style>
 
 <div class="SignUpButtonContainer" {...$$restProps}>
-  <input type="submit" value="sign up" class="SignUpButton" />
+  <input type="submit" value="sign up" class="SignUpButton" class:enabled />
 </div>

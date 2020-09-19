@@ -3,43 +3,41 @@
   import {
     BroadcastChannelNames,
   } from '../../../constants/BroadcastChannelNames.mjs';
+  import {
+    SignUpProtocolMessages,
+  } from '../../../constants/SignUpProtocolMessages.mjs';
   import Input from '../../Input.svelte';
   import PositionSelector from './PositionSelector.svelte';
 
   export let signupUserInfo;
 
   let userInfoFieldChangeBroadcastChannel;
-  const userInfo = {
-    position: (signupUserInfo?.position?.items?.find((position) => position.checked === true))?.value,
-    bday: null,
-    guardianEmail: null,
-    firstName: null,
-    lastName: null,
-    userName: null,
-    email: null,
-    password: null,
-    repeatPassword: null,
-    city: null,
-    localization: null,
-  };
+  let postponedMessages = [];
 
   const handleFieldChange = ({ key, event }) => {
-    userInfoFieldChangeBroadcastChannel.postMessage({ key, payload: event.detail.payload });
+    const message = SignUpProtocolMessages.FieldValueChanged({ key, payload: event.detail.payload });
+
+    if (userInfoFieldChangeBroadcastChannel) {
+      userInfoFieldChangeBroadcastChannel.postMessage(message);
+    } else {
+      postponedMessages.push(message);
+    }
   };
 
   onMount(() => {
     userInfoFieldChangeBroadcastChannel = new BroadcastChannel(BroadcastChannelNames.UserInfoFieldChangeBroadcastChannel);
 
-    userInfoFieldChangeBroadcastChannel.onmessage = ({ data: { key, payload } }) => {
-      const isChangeSuccessfull = payload === true ? '' : 'not';
+    while (postponedMessages.length > 0) {
+      userInfoFieldChangeBroadcastChannel.postMessage(postponedMessages.shift());
+    }
 
-      console.debug(`${key}'s field content change was ${isChangeSuccessfull} successfull`.replace('  ', ' '));
-    };
   });
 
   onDestroy(() => {
     if (userInfoFieldChangeBroadcastChannel) {
       userInfoFieldChangeBroadcastChannel.close();
+
+      userInfoFieldChangeBroadcastChannel = undefined;
     }
   });
 </script>
