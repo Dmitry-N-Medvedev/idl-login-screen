@@ -33,7 +33,7 @@ export class LibAPI extends EventEmitter {
       .ws('/*', {
         compression: uWS.SHARED_COMPRESSOR,
         maxPayloadLength: 16 * 1024 * 1024,
-        idleTimeout: 10,
+        idleTimeout: 0,
         open: (/* ws */) => {
           this.#debuglog('ws connected');
         },
