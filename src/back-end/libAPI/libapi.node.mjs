@@ -1,20 +1,31 @@
 import util from 'util';
 import EventEmitter from 'events';
 import uWS from 'uWebSockets.js';
+import {
+  noop,
+} from '../../common/noop.mjs';
+import {
+  MessageHandler,
+} from './MessageHandler.mjs';
 
-const noop = () => { };
+const sendMessageProps = {
+  isBinary: true,
+  compress: false,
+};
 
 export class LibAPI extends EventEmitter {
   #config = null;
   #debuglog = noop;
   #wss = null;
   #uws_listen_socket = null;
+  #messageHandler = null;
 
   constructor(config) {
     super();
 
     this.#config = { ...config };
     this.#debuglog = util.debuglog(this.constructor.name);
+    this.#messageHandler = new MessageHandler();
   }
 
   async start() {
@@ -26,11 +37,18 @@ export class LibAPI extends EventEmitter {
         open: (/* ws */) => {
           this.#debuglog('ws connected');
         },
-        message: (ws, message, isBinary) => {
-          this.#debuglog('ws message', message, isBinary);
+        message: async (ws, message, isBinary) => {
+          try {
+            ws.send(
+              (await this.#messageHandler.processMessage(message, isBinary)),
+              sendMessageProps,
+            );
+          } catch (messageProcessingError) {
+            ws.send(JSON.stringify(messageProcessingError), ...{ sendMessageProps });
+          }
         },
-        close: (ws, code, message) => {
-          this.#debuglog('ws closed', code, message);
+        close: (ws, code) => {
+          this.#debuglog('ws closed', code);
         },
       })
       .any('/*', (res /* , req */) => {
