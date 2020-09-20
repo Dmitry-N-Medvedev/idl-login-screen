@@ -12,10 +12,7 @@
   },
   "engineStrict": true,
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ./ --ext .js --ext .mjs",
-    "pretest": "pnpm run lint && pnpm audit",
-    "test": "cross-env NODE_ENV=test NODE_DEBUG=LibAPI ./node_modules/.bin/nyc ./node_modules/.bin/mocha -- --experimental-json-modules --trace-warnings",
-    "coverage": "./node_modules/.bin/nyc report reporter=text-lcov | ./node_modules/.bin/coveralls"
+    "lint": "./node_modules/.bin/eslint ./ --ext .js --ext .mjs"
   },
   "dependencies": {
     "@dmitry-n-medvedev/libapi": "workspace:^0.0.0",

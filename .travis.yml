@@ -1,0 +1,21 @@
+dist: bionic
+language: node_js
+node_js:
+  - 14.5.0
+os: linux
+before_install:
+  - wget http://download.redis.io/redis-stable.tar.gz
+  - tar xzf redis-stable.tar.gz
+  - cd redis-stable && make && sudo make install
+  - sudo systemctl restart redis-server
+  - curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | PNPM_VERSION=next node
+  - pnpm config set store-dir ~/.pnpm-store
+  - pnpm --version
+install:
+  - pnpm --recursive install
+script:
+  - pnpm --recursive run test
+cache:
+  npm: false
+  directories:
+    - "~/.pnpm-store"
